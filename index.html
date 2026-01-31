@@ -5,36 +5,42 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      min-height: 100vh;
       margin: 0;
       padding: 0;
-      /* Background gradient */
-      background: linear-gradient(135deg, #f6d365, #fda085);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      color: #fff;
     }
 
-    h2 {
-      color: #fff;
+    h1, h2 {
+      text-align: center;
       text-shadow: 1px 1px 2px #000;
     }
 
-    #question {
+    #start-screen, #quiz-screen {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    #start-btn {
+      padding: 15px 25px;
       font-size: 20px;
-      margin: 15px 0;
-      color: #fff;
-      text-shadow: 1px 1px 2px #000;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    #timer {
-      font-weight: bold;
-      font-size: 18px;
-      margin: 10px 0;
-      color: #fff;
-      text-shadow: 1px 1px 2px #000;
+    #start-btn:hover {
+      background-color: #e68900;
+      transform: scale(1.05);
     }
 
     .option {
@@ -55,21 +61,37 @@
       background-color: #e68900;
       transform: scale(1.03);
     }
+
+    #timer {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
   </style>
 </head>
-
 <body>
 
-<h2>🍳✈️💻 Food–Travel–Tech Quiz</h2>
-<p id="question">Loading...</p>
-<p id="timer">Time: 45s</p>
+<!-- START SCREEN -->
+<div id="start-screen">
+  <h1>🍳✈️💻 Food–Travel–Tech Quiz</h1>
+  <p>Test your knowledge about Food, Travel and Technology!</p>
+  <button id="start-btn">Start Quiz</button>
+</div>
 
-<button class="option" onclick="checkAnswer(0)">Option 1</button>
-<button class="option" onclick="checkAnswer(1)">Option 2</button>
-<button class="option" onclick="checkAnswer(2)">Option 3</button>
-<button class="option" onclick="checkAnswer(3)">Option 4</button>
+<!-- QUIZ SCREEN (hidden initially) -->
+<div id="quiz-screen" style="display:none;">
+  <h2 id="question">Loading...</h2>
+  <p id="timer">Time: 45s</p>
 
-<p id="result"></p>
+  <button class="option" onclick="checkAnswer(0)">Option 1</button>
+  <button class="option" onclick="checkAnswer(1)">Option 2</button>
+  <button class="option" onclick="checkAnswer(2)">Option 3</button>
+  <button class="option" onclick="checkAnswer(3)">Option 4</button>
+
+  <p id="result"></p>
+</div>
 
 <script>
 let questions = [
@@ -85,7 +107,7 @@ let questions = [
   {question: "Which is a popular ride-hailing app?", options: ["Uber","Spotify","Slack","Zoom"], answer: 0}
 ];
 
-// Shuffle questions and take first 10
+// Shuffle questions and take 10
 questions = questions.sort(() => 0.5 - Math.random()).slice(0,10);
 
 let current = 0;
@@ -93,12 +115,19 @@ let score = 0;
 let timeLeft = 45;
 let timerInterval;
 
-// ------------------- Load Question -------------------
+// ------------------- START QUIZ -------------------
+document.getElementById("start-btn").addEventListener("click", () => {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("quiz-screen").style.display = "block";
+  loadQuestion();
+});
+
+// ------------------- LOAD QUESTION -------------------
 function loadQuestion() {
   document.getElementById("result").innerText = "";
   document.getElementById("question").innerText = questions[current].question;
 
-  let buttons = document.querySelectorAll("button");
+  let buttons = document.querySelectorAll(".option");
   buttons.forEach((btn, i) => {
     btn.innerText = questions[current].options[i];
     btn.style.backgroundColor = "#ff9800"; // reset button color
@@ -107,20 +136,20 @@ function loadQuestion() {
   startTimer();
 }
 
-// ------------------- Check Answer -------------------
+// ------------------- CHECK ANSWER -------------------
 function checkAnswer(i) {
   clearInterval(timerInterval);
 
-  let buttons = document.querySelectorAll("button");
+  let buttons = document.querySelectorAll(".option");
 
   if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
     score++;
-    buttons[i].style.backgroundColor = "#4CAF50"; // green flash
+    buttons[i].style.backgroundColor = "#4CAF50"; // green
   } else {
     document.getElementById("result").innerText = "❌ Wrong!";
-    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red flash
-    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // show correct
+    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red
+    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // correct
   }
 
   current++;
@@ -132,7 +161,7 @@ function checkAnswer(i) {
   }
 }
 
-// ------------------- Timer -------------------
+// ------------------- TIMER -------------------
 function startTimer() {
   timeLeft = 45;
   document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
@@ -141,14 +170,14 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
     document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
-    if (timeLeft <= 0) {
+    if(timeLeft <= 0) {
       clearInterval(timerInterval);
       checkAnswer(-1);
     }
   }, 1000);
 }
 
-// ------------------- Final Result -------------------
+// ------------------- FINAL RESULT -------------------
 function showFinalResult() {
   document.getElementById("question").innerText = "🎉 Quiz Finished!";
   document.getElementById("timer").innerText = "";
@@ -158,9 +187,7 @@ function showFinalResult() {
     + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
     "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
 }
-
-// ------------------- Start Quiz -------------------
-loadQuestion();
 </script>
+
 </body>
 </html>
