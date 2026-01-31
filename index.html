@@ -2,11 +2,39 @@
 <html>
 <head>
   <title>Food Travel Tech Quiz</title>
-
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      /* Background gradient */
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h2 {
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #question {
+      font-size: 20px;
+      margin: 15px 0;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #timer {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
     }
 
     .option {
@@ -20,18 +48,12 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.2s;
     }
 
     .option:hover {
       background-color: #e68900;
-      transform: scale(1.03); /* slight zoom for hover */
-    }
-
-    #timer {
-      font-weight: bold;
-      font-size: 18px;
-      margin: 10px 0;
+      transform: scale(1.03);
     }
   </style>
 </head>
@@ -39,7 +61,6 @@
 <body>
 
 <h2>🍳✈️💻 Food–Travel–Tech Quiz</h2>
-
 <p id="question">Loading...</p>
 <p id="timer">Time: 45s</p>
 
@@ -52,71 +73,94 @@
 
 <script>
 let questions = [
-  {
-    question: "Which country is famous for sushi?",
-    options: ["China", "Japan", "Thailand", "Korea"],
-    answer: 1
-  },
-  {
-    question: "Arambol Beach is in which Indian state?",
-    options: ["Kerala", "Goa", "Karnataka", "Maharashtra"],
-    answer: 1
-  },
-  {
-    question: "RAM stands for?",
-    options: ["Read Access Memory", "Random Access Memory", "Run Access Memory", "Rapid Access Memory"],
-    answer: 1
-  }
+  {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
+  {question: "Arambol Beach is in which Indian state?", options: ["Kerala","Goa","Karnataka","Maharashtra"], answer: 1},
+  {question: "RAM stands for?", options: ["Read Access Memory","Random Access Memory","Run Access Memory","Rapid Access Memory"], answer: 1},
+  {question: "Which tech company created the iPhone?", options: ["Samsung","Apple","Google","Microsoft"], answer: 1},
+  {question: "Paella is a traditional dish from which country?", options: ["Italy","Spain","Mexico","Portugal"], answer: 1},
+  {question: "Which country has the Great Wall?", options: ["China","Japan","India","Thailand"], answer: 0},
+  {question: "Which technology is used in Bitcoin?", options: ["Blockchain","Cloud","AI","IoT"], answer: 0},
+  {question: "What is the main ingredient of guacamole?", options: ["Tomato","Avocado","Potato","Corn"], answer: 1},
+  {question: "The Taj Mahal is located in?", options: ["Agra","Delhi","Jaipur","Mumbai"], answer: 0},
+  {question: "Which is a popular ride-hailing app?", options: ["Uber","Spotify","Slack","Zoom"], answer: 0}
 ];
+
+// Shuffle questions and take first 10
+questions = questions.sort(() => 0.5 - Math.random()).slice(0,10);
 
 let current = 0;
 let score = 0;
-
-// Timer variables
 let timeLeft = 45;
 let timerInterval;
 
-// ------------------- Load Question Function -------------------
+// ------------------- Load Question -------------------
 function loadQuestion() {
-  document.getElementById("result").innerText = ""; // clear previous result
-  document.getElementById("question").innerText =
-    questions[current].question; // show new question
+  document.getElementById("result").innerText = "";
+  document.getElementById("question").innerText = questions[current].question;
 
-  let buttons = document.querySelectorAll("button"); // get all buttons
+  let buttons = document.querySelectorAll("button");
   buttons.forEach((btn, i) => {
-    btn.innerText = questions[current].options[i]; // add answer text
+    btn.innerText = questions[current].options[i];
+    btn.style.backgroundColor = "#ff9800"; // reset button color
   });
 
-  startTimer(); // ✅ Start the 45-second timer for this question
+  startTimer();
 }
 
-// ------------------- Check Answer Function -------------------
+// ------------------- Check Answer -------------------
 function checkAnswer(i) {
-  clearInterval(timerInterval); // ✅ Stop the timer when user clicks
+  clearInterval(timerInterval);
+
+  let buttons = document.querySelectorAll("button");
 
   if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
     score++;
+    buttons[i].style.backgroundColor = "#4CAF50"; // green flash
   } else {
     document.getElementById("result").innerText = "❌ Wrong!";
+    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red flash
+    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // show correct
   }
 
   current++;
 
   if (current < questions.length) {
-    setTimeout(loadQuestion, 1000); // load next question after 1 sec
+    setTimeout(loadQuestion, 1200);
   } else {
-    // Quiz finished
-    document.getElementById("question").innerText = "🎉 Quiz Finished!";
-    document.getElementById("result").innerHTML = 
-      "Your score: " + score + "/" + questions.length + "<br><br>" +
-      "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
-      + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
-      "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
+    setTimeout(showFinalResult, 1200);
   }
 }
 
-// ------------------- Timer Function -------------------
+// ------------------- Timer -------------------
 function startTimer() {
-  timeLeft = 45; // reset time for each question
-  document.getElementByI
+  timeLeft = 45;
+  document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      checkAnswer(-1);
+    }
+  }, 1000);
+}
+
+// ------------------- Final Result -------------------
+function showFinalResult() {
+  document.getElementById("question").innerText = "🎉 Quiz Finished!";
+  document.getElementById("timer").innerText = "";
+  document.getElementById("result").innerHTML =
+    "Your score: " + score + "/" + questions.length + "<br><br>" +
+    "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
+    + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
+    "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
+}
+
+// ------------------- Start Quiz -------------------
+loadQuestion();
+</script>
+</body>
+</html>
