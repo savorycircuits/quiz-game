@@ -20,10 +20,18 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      transition: transform 0.2s;
     }
 
     .option:hover {
-      background-color: red;
+      background-color: #e68900;
+      transform: scale(1.03); /* slight zoom for hover */
+    }
+
+    #timer {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -33,6 +41,7 @@
 <h2>🍳✈️💻 Food–Travel–Tech Quiz</h2>
 
 <p id="question">Loading...</p>
+<p id="timer">Time: 45s</p>
 
 <button class="option" onclick="checkAnswer(0)">Option 1</button>
 <button class="option" onclick="checkAnswer(1)">Option 2</button>
@@ -42,8 +51,6 @@
 <p id="result"></p>
 
 <script>
-alert("JS is running");
-  
 let questions = [
   {
     question: "Which country is famous for sushi?",
@@ -65,45 +72,51 @@ let questions = [
 let current = 0;
 let score = 0;
 
+// Timer variables
+let timeLeft = 45;
+let timerInterval;
 
+// ------------------- Load Question Function -------------------
 function loadQuestion() {
-  document.getElementById("result").innerText = "";
+  document.getElementById("result").innerText = ""; // clear previous result
   document.getElementById("question").innerText =
-    questions[current].question;
+    questions[current].question; // show new question
 
-  let buttons = document.querySelectorAll("button");
+  let buttons = document.querySelectorAll("button"); // get all buttons
   buttons.forEach((btn, i) => {
-    btn.innerText = questions[current].options[i];
+    btn.innerText = questions[current].options[i]; // add answer text
   });
+
+  startTimer(); // ✅ Start the 45-second timer for this question
 }
 
-
+// ------------------- Check Answer Function -------------------
 function checkAnswer(i) {
- if (i === questions[current].answer) {
+  clearInterval(timerInterval); // ✅ Stop the timer when user clicks
+
+  if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
     score++;
-} else {
+  } else {
     document.getElementById("result").innerText = "❌ Wrong!";
-}
-
+  }
 
   current++;
 
   if (current < questions.length) {
-    setTimeout(loadQuestion, 1000);
+    setTimeout(loadQuestion, 1000); // load next question after 1 sec
   } else {
-document.getElementById("question").innerText = "🎉 Quiz Finished!";
-document.getElementById("result").innerHTML = 
-  "Your score: " + score + "/" + questions.length + "<br><br>" +
-  "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
-  + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
-  "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
-
+    // Quiz finished
+    document.getElementById("question").innerText = "🎉 Quiz Finished!";
+    document.getElementById("result").innerHTML = 
+      "Your score: " + score + "/" + questions.length + "<br><br>" +
+      "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
+      + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
+      "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
   }
 }
 
-loadQuestion();
-</script>
-
-</body>
-</html>
+// ------------------- Timer Function -------------------
+function startTimer() {
+  timeLeft = 45; // reset time for each question
+  document.getElementByI
