@@ -2,17 +2,42 @@
 <html>
 <head>
   <title>Food Travel Tech Quiz</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .option {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #e68900;
+    }
+  </style>
 </head>
+
 <body>
 
 <h2>🍳✈️💻 Food–Travel–Tech Quiz</h2>
 
 <p id="question">Loading...</p>
 
-<button onclick="checkAnswer(0)"></button>
-<button onclick="checkAnswer(1)"></button>
-<button onclick="checkAnswer(2)"></button>
-<button onclick="checkAnswer(3)"></button>
+<button class="option" onclick="checkAnswer(0)"></button>
+<button class="option" onclick="checkAnswer(1)"></button>
+<button class="option" onclick="checkAnswer(2)"></button>
+<button class="option" onclick="checkAnswer(3)"></button>
 
 <p id="result"></p>
 
