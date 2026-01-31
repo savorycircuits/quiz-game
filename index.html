@@ -12,7 +12,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #f6d365, #fda085);
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
       color: #fff;
     }
 
@@ -76,11 +76,11 @@
 <!-- START SCREEN -->
 <div id="start-screen">
   <h1>🍳✈️💻 Food–Travel–Tech Quiz</h1>
-  <p>Test your knowledge about Food, Travel, and Technology!</p>
+  <p>Test your global knowledge about Food, Travel, and Technology!</p>
   <button id="start-btn">Start Quiz</button>
 </div>
 
-<!-- QUIZ SCREEN (hidden initially) -->
+<!-- QUIZ SCREEN -->
 <div id="quiz-screen" style="display:none;">
   <h2 id="question">Loading...</h2>
   <p id="timer">Time: 45s</p>
@@ -96,30 +96,49 @@
 <script>
 let allQuestions = [
   {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
-  {question: "Arambol Beach is in which Indian state?", options: ["Kerala","Goa","Karnataka","Maharashtra"], answer: 1},
-  {question: "RAM stands for?", options: ["Read Access Memory","Random Access Memory","Run Access Memory","Rapid Access Memory"], answer: 1},
-  {question: "Which tech company created the iPhone?", options: ["Samsung","Apple","Google","Microsoft"], answer: 1},
-  {question: "Paella is a traditional dish from which country?", options: ["Italy","Spain","Mexico","Portugal"], answer: 1},
-  {question: "Which country has the Great Wall?", options: ["China","Japan","India","Thailand"], answer: 0},
+  {question: "Which city has the Eiffel Tower?", options: ["London","Paris","Rome","Berlin"], answer: 1},
+  {question: "Which planet is known as the Red Planet?", options: ["Earth","Mars","Jupiter","Venus"], answer: 1},
   {question: "Which technology is used in Bitcoin?", options: ["Blockchain","Cloud","AI","IoT"], answer: 0},
-  {question: "What is the main ingredient of guacamole?", options: ["Tomato","Avocado","Potato","Corn"], answer: 1},
-  {question: "The Taj Mahal is located in?", options: ["Agra","Delhi","Jaipur","Mumbai"], answer: 0},
-  {question: "Which is a popular ride-hailing app?", options: ["Uber","Spotify","Slack","Zoom"], answer: 0},
-  // Add up to 100 questions here, for example repeating or creating new
-  {question: "Which planet is known as the Red Planet?", options:["Earth","Mars","Jupiter","Venus"], answer:1},
-  {question: "Sushi originates from which country?", options:["China","Japan","Korea","Thailand"], answer:1},
-  {question: "Which app is used for video conferencing?", options:["Zoom","Gmail","Drive","Slack"], answer:0},
-  {question: "Which spice is essential in Indian curry?", options:["Cumin","Basil","Oregano","Thyme"], answer:0},
-  {question: "Which country invented pizza?", options:["Italy","France","Spain","USA"], answer:0},
-  {question: "HTML is used for?", options:["Designing","Programming","Structuring Web","Database"], answer:2},
-  {question: "Which beach is famous in Goa?", options:["Baga","Copacabana","Bondi","Waikiki"], answer:0},
-  {question: "CSS is used for?", options:["Functionality","Styling","Logic","Database"], answer:1},
-  {question: "Which country is famous for chocolate?", options:["Belgium","USA","India","Brazil"], answer:0},
-  {question: "Python is a?", options:["Snake","Programming Language","Car","Fruit"], answer:1},
-  // Add as many as you like to reach 100 questions
+  {question: "Paella is a traditional dish from which country?", options: ["Italy","Spain","Mexico","Portugal"], answer: 1},
+  {question: "Which company created the iPhone?", options: ["Samsung","Apple","Google","Microsoft"], answer: 1},
+  {question: "Which country is famous for the Great Wall?", options: ["China","Japan","India","Thailand"], answer: 0},
+  {question: "Which spice is essential in curry dishes worldwide?", options: ["Cumin","Basil","Oregano","Thyme"], answer: 0},
+  {question: "The Colosseum is located in which city?", options: ["Athens","Rome","Venice","Paris"], answer: 1},
+  {question: "Which country is famous for chocolate?", options: ["Belgium","USA","India","Brazil"], answer: 0},
+  {question: "Which company developed Android?", options: ["Apple","Google","Microsoft","Samsung"], answer: 1},
+  {question: "Which fruit is used in guacamole?", options: ["Avocado","Tomato","Potato","Corn"], answer: 0},
+  {question: "Which city is famous for the Taj Mahal?", options: ["Agra","Delhi","Jaipur","Mumbai"], answer: 0},
+  {question: "Which software is used for video conferencing globally?", options: ["Zoom","Slack","Spotify","Drive"], answer: 0},
+  {question: "Which city is known as the Big Apple?", options: ["New York","Los Angeles","Chicago","Miami"], answer: 0},
+  {question: "Which country is famous for pizza?", options: ["Italy","France","Spain","USA"], answer: 0},
+  {question: "Which desert is the largest in the world?", options: ["Sahara","Gobi","Kalahari","Arabian"], answer: 0},
+  {question: "Which city has the Sydney Opera House?", options: ["Melbourne","Sydney","Auckland","Brisbane"], answer: 1},
+  {question: "Which app is popular for photo sharing?", options: ["Instagram","Twitter","Zoom","Slack"], answer: 0},
+  {question: "Which European city is known for canals?", options: ["Venice","Paris","London","Amsterdam"], answer: 0},
+  {question: "Which sea is between Africa and Europe?", options: ["Red Sea","Mediterranean Sea","Baltic Sea","Black Sea"], answer: 1},
+  {question: "Which country is famous for maple syrup?", options: ["Canada","USA","Sweden","Norway"], answer: 0},
+  {question: "Which programming language is known for web development?", options: ["Python","HTML","C++","Java"], answer: 1},
+  {question: "Which country is home to the Amazon Rainforest?", options: ["Brazil","Peru","Colombia","Venezuela"], answer: 0},
+  {question: "Which chocolate brand is from Switzerland?", options: ["Lindt","Hershey","Nestle","Cadbury"], answer: 0},
+  {question: "Which city hosts Oktoberfest?", options: ["Berlin","Munich","Frankfurt","Hamburg"], answer: 1},
+  {question: "Which country is known for flamenco dance?", options: ["Spain","Portugal","Italy","Mexico"], answer: 0},
+  {question: "Which company created Windows?", options: ["Microsoft","Apple","Google","IBM"], answer: 0},
+  {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
+  {question: "Which landmark is in India?", options: ["Christ the Redeemer","Taj Mahal","Eiffel Tower","Big Ben"], answer: 1},
+  {question: "Which country is known for tulips?", options: ["Netherlands","Belgium","Germany","France"], answer: 0},
+  {question: "Which country is famous for Kimchi?", options: ["China","Japan","South Korea","Thailand"], answer: 2},
+  {question: "Which city is called the City of Light?", options: ["London","Paris","Rome","New York"], answer: 1},
+  {question: "Which beverage originated in Turkey?", options: ["Coffee","Tea","Wine","Beer"], answer: 0},
+  {question: "Which airline is from the United Arab Emirates?", options: ["Emirates","Qatar Airways","Singapore Airlines","Etihad"], answer: 0},
+  {question: "Which country hosts the Carnival festival?", options: ["Brazil","Italy","Spain","Mexico"], answer: 0},
+  {question: "Which tech company made the first computer mouse?", options: ["Apple","Xerox","Microsoft","IBM"], answer: 1},
+  {question: "Which city has the Burj Khalifa?", options: ["Dubai","Doha","Abu Dhabi","Riyadh"], answer: 0},
+  {question: "Which sea borders Italy?", options: ["Mediterranean","Red","Black","Baltic"], answer: 0},
+  {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
+  // Add more up to 100+ questions as needed
 ];
 
-// Shuffle all questions and pick 10 for this quiz session
+// Shuffle all questions and pick 10 per session
 let questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0,10);
 
 let current = 0;
@@ -142,7 +161,7 @@ function loadQuestion() {
   let buttons = document.querySelectorAll(".option");
   buttons.forEach((btn, i) => {
     btn.innerText = questions[current].options[i];
-    btn.style.backgroundColor = "#ff9800"; // reset color
+    btn.style.backgroundColor = "#ff9800";
   });
 
   startTimer();
@@ -151,22 +170,20 @@ function loadQuestion() {
 // ------------------- CHECK ANSWER -------------------
 function checkAnswer(i) {
   clearInterval(timerInterval);
-
   let buttons = document.querySelectorAll(".option");
 
-  if (i === questions[current].answer) {
+  if(i === questions[current].answer){
     document.getElementById("result").innerText = "✅ Correct!";
     score++;
-    buttons[i].style.backgroundColor = "#4CAF50"; // green flash
+    if(i>=0) buttons[i].style.backgroundColor="#4CAF50";
   } else {
     document.getElementById("result").innerText = "❌ Wrong!";
-    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red flash
-    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // show correct
+    if(i>=0) buttons[i].style.backgroundColor="#f44336";
+    buttons[questions[current].answer].style.backgroundColor="#4CAF50";
   }
 
   current++;
-
-  if(current < questions.length){
+  if(current<questions.length){
     setTimeout(loadQuestion,1200);
   } else {
     setTimeout(showFinalResult,1200);
@@ -174,15 +191,15 @@ function checkAnswer(i) {
 }
 
 // ------------------- TIMER -------------------
-function startTimer() {
-  timeLeft = 45;
-  document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
+function startTimer(){
+  timeLeft=45;
+  document.getElementById("timer").innerText="Time: "+timeLeft+"s";
   clearInterval(timerInterval);
 
-  timerInterval = setInterval(() => {
+  timerInterval=setInterval(()=>{
     timeLeft--;
-    document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
-    if(timeLeft <= 0){
+    document.getElementById("timer").innerText="Time: "+timeLeft+"s";
+    if(timeLeft<=0){
       clearInterval(timerInterval);
       checkAnswer(-1);
     }
@@ -190,13 +207,13 @@ function startTimer() {
 }
 
 // ------------------- FINAL RESULT -------------------
-function showFinalResult() {
-  document.getElementById("question").innerText = "🎉 Quiz Finished!";
-  document.getElementById("timer").innerText = "";
-  document.getElementById("result").innerHTML =
-    "Your score: " + score + "/" + questions.length + "<br><br>" +
-    "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
-    + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
+function showFinalResult(){
+  document.getElementById("question").innerText="🎉 Quiz Finished!";
+  document.getElementById("timer").innerText="";
+  document.getElementById("result").innerHTML=
+    "Your score: "+score+"/"+questions.length+"<br><br>"+
+    "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored "+
+    score+"/"+questions.length+" in the Global Food–Travel–Tech Quiz! Can you beat me?' target='_blank' "+
     "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
 }
 </script>
