@@ -38,6 +38,8 @@ let questions = [
 ];
 
 let current = 0;
+let score = 0;
+
 
 function loadQuestion() {
   document.getElementById("result").innerText = "";
@@ -51,11 +53,13 @@ function loadQuestion() {
 }
 
 function checkAnswer(i) {
-  if (i === questions[current].answer) {
+ if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
-  } else {
+    score++;
+} else {
     document.getElementById("result").innerText = "❌ Wrong!";
-  }
+}
+
 
   current++;
 
@@ -63,7 +67,8 @@ function checkAnswer(i) {
     setTimeout(loadQuestion, 1000);
   } else {
     document.getElementById("question").innerText = "🎉 Quiz Finished!";
-    document.getElementById("result").innerText = "Thanks for playing!";
+document.getElementById("result").innerText = "Your score: " + score + "/" + questions.length;
+
   }
 }
 
