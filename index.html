@@ -17,26 +17,60 @@
 <p id="result"></p>
 
 <script>
-let q = {
-  question: "Which country is famous for sushi?",
-  options: ["China", "Japan", "Thailand", "Korea"],
-  answer: 1
+let questions = [
+  {
+    question: "Which country is famous for sushi?",
+    options: ["China", "Japan", "Thailand", "Korea"],
+    answer: 1
+  },
+  {
+    question: "Arambol Beach is in which Indian state?",
+    options: ["Kerala", "Goa", "Karnataka", "Maharashtra"],
+    answer: 1
+  },
+  {
+    question: "RAM stands for?",
+    options: ["Read Access Memory", "Random Access Memory", "Run Access Memory", "Rapid Access Memory"],
+    answer: 1
+  }
+];
+
+let current = 0;
+
 };
 
-document.getElementById("question").innerText = q.question;
+function loadQuestion() {
+  document.getElementById("result").innerText = "";
+  document.getElementById("question").innerText =
+    questions[current].question;
 
-let buttons = document.querySelectorAll("button");
-buttons.forEach((btn, i) => {
-  btn.innerText = q.options[i];
-});
+  let buttons = document.querySelectorAll("button");
+  buttons.forEach((btn, i) => {
+    btn.innerText = questions[current].options[i];
+  });
+}
+
+loadQuestion();
+
 
 function checkAnswer(i) {
-  if (i === q.answer) {
+  if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
   } else {
     document.getElementById("result").innerText = "❌ Wrong!";
   }
+
+  current++;
+
+  if (current < questions.length) {
+    setTimeout(loadQuestion, 1000);
+  } else {
+    document.getElementById("question").innerText = "🎉 Quiz Finished!";
+    document.getElementById("result").innerText =
+      "Thanks for playing!";
+  }
 }
+
 </script>
 
 </body>
