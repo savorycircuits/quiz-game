@@ -68,10 +68,10 @@ function checkAnswer(i) {
   } else {
 document.getElementById("question").innerText = "🎉 Quiz Finished!";
 document.getElementById("result").innerHTML = 
-"Your score: " + score + "/" + questions.length + "<br><br>" +
-"<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
-+ score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank'>Share on Facebook</a>";
-
+  "Your score: " + score + "/" + questions.length + "<br><br>" +
+  "<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
+  + score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank' " +
+  "style='display:inline-block; padding:10px 15px; background:#1877f2; color:white; text-decoration:none; border-radius:5px; font-weight:bold;'>Share on Facebook</a>";
 
   }
 }
