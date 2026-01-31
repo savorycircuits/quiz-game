@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Travel Tech Quiz</title>
+</head>
+<body>
+
+<h2>🍳✈️💻 Food–Travel–Tech Quiz</h2>
+
+<p id="question">Loading...</p>
+
+<button onclick="checkAnswer(0)">Option 1</button>
+<button onclick="checkAnswer(1)">Option 2</button>
+<button onclick="checkAnswer(2)">Option 3</button>
+<button onclick="checkAnswer(3)">Option 4</button>
+
+<p id="result"></p>
+
+<script>
+let q = {
+  question: "Which country is famous for sushi?",
+  options: ["China", "Japan", "Thailand", "Korea"],
+  answer: 1
+};
+
+document.getElementById("question").innerText = q.question;
+
+let buttons = document.querySelectorAll("button");
+buttons.forEach((btn, i) => {
+  btn.innerText = q.options[i];
+});
+
+function checkAnswer(i) {
+  if (i === q.answer) {
+    document.getElementById("result").innerText = "✅ Correct!";
+  } else {
+    document.getElementById("result").innerText = "❌ Wrong!";
+  }
+}
+</script>
+
+</body>
+</html>
