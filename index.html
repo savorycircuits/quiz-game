@@ -67,7 +67,11 @@ function checkAnswer(i) {
     setTimeout(loadQuestion, 1000);
   } else {
 document.getElementById("question").innerText = "🎉 Quiz Finished!";
-document.getElementById("result").innerText = "Your score: " + score + "/" + questions.length;
+document.getElementById("result").innerHTML = 
+"Your score: " + score + "/" + questions.length + "<br><br>" +
+"<a href='https://www.facebook.com/sharer/sharer.php?u=https://savorycircuits.github.io/quiz-game/&quote=I scored " 
++ score + "/" + questions.length + " in the Food–Travel–Tech Quiz! Can you beat me?' target='_blank'>Share on Facebook</a>";
+
 
   }
 }
