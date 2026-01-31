@@ -76,7 +76,7 @@
 <!-- START SCREEN -->
 <div id="start-screen">
   <h1>🍳✈️💻 Food–Travel–Tech Quiz</h1>
-  <p>Test your knowledge about Food, Travel and Technology!</p>
+  <p>Test your knowledge about Food, Travel, and Technology!</p>
   <button id="start-btn">Start Quiz</button>
 </div>
 
@@ -94,7 +94,7 @@
 </div>
 
 <script>
-let questions = [
+let allQuestions = [
   {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
   {question: "Arambol Beach is in which Indian state?", options: ["Kerala","Goa","Karnataka","Maharashtra"], answer: 1},
   {question: "RAM stands for?", options: ["Read Access Memory","Random Access Memory","Run Access Memory","Rapid Access Memory"], answer: 1},
@@ -104,11 +104,23 @@ let questions = [
   {question: "Which technology is used in Bitcoin?", options: ["Blockchain","Cloud","AI","IoT"], answer: 0},
   {question: "What is the main ingredient of guacamole?", options: ["Tomato","Avocado","Potato","Corn"], answer: 1},
   {question: "The Taj Mahal is located in?", options: ["Agra","Delhi","Jaipur","Mumbai"], answer: 0},
-  {question: "Which is a popular ride-hailing app?", options: ["Uber","Spotify","Slack","Zoom"], answer: 0}
+  {question: "Which is a popular ride-hailing app?", options: ["Uber","Spotify","Slack","Zoom"], answer: 0},
+  // Add up to 100 questions here, for example repeating or creating new
+  {question: "Which planet is known as the Red Planet?", options:["Earth","Mars","Jupiter","Venus"], answer:1},
+  {question: "Sushi originates from which country?", options:["China","Japan","Korea","Thailand"], answer:1},
+  {question: "Which app is used for video conferencing?", options:["Zoom","Gmail","Drive","Slack"], answer:0},
+  {question: "Which spice is essential in Indian curry?", options:["Cumin","Basil","Oregano","Thyme"], answer:0},
+  {question: "Which country invented pizza?", options:["Italy","France","Spain","USA"], answer:0},
+  {question: "HTML is used for?", options:["Designing","Programming","Structuring Web","Database"], answer:2},
+  {question: "Which beach is famous in Goa?", options:["Baga","Copacabana","Bondi","Waikiki"], answer:0},
+  {question: "CSS is used for?", options:["Functionality","Styling","Logic","Database"], answer:1},
+  {question: "Which country is famous for chocolate?", options:["Belgium","USA","India","Brazil"], answer:0},
+  {question: "Python is a?", options:["Snake","Programming Language","Car","Fruit"], answer:1},
+  // Add as many as you like to reach 100 questions
 ];
 
-// Shuffle questions and take 10
-questions = questions.sort(() => 0.5 - Math.random()).slice(0,10);
+// Shuffle all questions and pick 10 for this quiz session
+let questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0,10);
 
 let current = 0;
 let score = 0;
@@ -130,7 +142,7 @@ function loadQuestion() {
   let buttons = document.querySelectorAll(".option");
   buttons.forEach((btn, i) => {
     btn.innerText = questions[current].options[i];
-    btn.style.backgroundColor = "#ff9800"; // reset button color
+    btn.style.backgroundColor = "#ff9800"; // reset color
   });
 
   startTimer();
@@ -145,19 +157,19 @@ function checkAnswer(i) {
   if (i === questions[current].answer) {
     document.getElementById("result").innerText = "✅ Correct!";
     score++;
-    buttons[i].style.backgroundColor = "#4CAF50"; // green
+    buttons[i].style.backgroundColor = "#4CAF50"; // green flash
   } else {
     document.getElementById("result").innerText = "❌ Wrong!";
-    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red
-    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // correct
+    if(i>=0) buttons[i].style.backgroundColor = "#f44336"; // red flash
+    buttons[questions[current].answer].style.backgroundColor = "#4CAF50"; // show correct
   }
 
   current++;
 
-  if (current < questions.length) {
-    setTimeout(loadQuestion, 1200);
+  if(current < questions.length){
+    setTimeout(loadQuestion,1200);
   } else {
-    setTimeout(showFinalResult, 1200);
+    setTimeout(showFinalResult,1200);
   }
 }
 
@@ -170,11 +182,11 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
     document.getElementById("timer").innerText = "Time: " + timeLeft + "s";
-    if(timeLeft <= 0) {
+    if(timeLeft <= 0){
       clearInterval(timerInterval);
       checkAnswer(-1);
     }
-  }, 1000);
+  },1000);
 }
 
 // ------------------- FINAL RESULT -------------------
