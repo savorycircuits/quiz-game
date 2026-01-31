@@ -9,10 +9,10 @@
 
 <p id="question">Loading...</p>
 
-<button onclick="checkAnswer(0)">Option 1</button>
-<button onclick="checkAnswer(1)">Option 2</button>
-<button onclick="checkAnswer(2)">Option 3</button>
-<button onclick="checkAnswer(3)">Option 4</button>
+<button onclick="checkAnswer(0)"></button>
+<button onclick="checkAnswer(1)"></button>
+<button onclick="checkAnswer(2)"></button>
+<button onclick="checkAnswer(3)"></button>
 
 <p id="result"></p>
 
@@ -37,8 +37,6 @@ let questions = [
 
 let current = 0;
 
-};
-
 function loadQuestion() {
   document.getElementById("result").innerText = "";
   document.getElementById("question").innerText =
@@ -49,9 +47,6 @@ function loadQuestion() {
     btn.innerText = questions[current].options[i];
   });
 }
-
-loadQuestion();
-
 
 function checkAnswer(i) {
   if (i === questions[current].answer) {
@@ -66,10 +61,10 @@ function checkAnswer(i) {
     setTimeout(loadQuestion, 1000);
   } else {
     document.getElementById("question").innerText = "🎉 Quiz Finished!";
-    document.getElementById("result").innerText =
-      "Thanks for playing!";
+    document.getElementById("result").innerText = "Thanks for playing!";
   }
 }
+
 loadQuestion();
 </script>
 
