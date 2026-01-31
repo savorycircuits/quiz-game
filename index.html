@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Food Travel Tech Quiz</title>
+  <title>Global Food–Travel–Tech Quiz</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,14 +73,12 @@
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="start-screen">
-  <h1>🍳✈️💻 Food–Travel–Tech Quiz</h1>
-  <p>Test your global knowledge about Food, Travel, and Technology!</p>
+  <h1>🍳✈️💻 Global Food–Travel–Tech Quiz</h1>
+  <p>Test your knowledge about Food, Travel, and Technology worldwide!</p>
   <button id="start-btn">Start Quiz</button>
 </div>
 
-<!-- QUIZ SCREEN -->
 <div id="quiz-screen" style="display:none;">
   <h2 id="question">Loading...</h2>
   <p id="timer">Time: 45s</p>
@@ -94,6 +92,7 @@
 </div>
 
 <script>
+// Global-only questions
 let allQuestions = [
   {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
   {question: "Which city has the Eiffel Tower?", options: ["London","Paris","Rome","Berlin"], answer: 1},
@@ -101,14 +100,12 @@ let allQuestions = [
   {question: "Which technology is used in Bitcoin?", options: ["Blockchain","Cloud","AI","IoT"], answer: 0},
   {question: "Paella is a traditional dish from which country?", options: ["Italy","Spain","Mexico","Portugal"], answer: 1},
   {question: "Which company created the iPhone?", options: ["Samsung","Apple","Google","Microsoft"], answer: 1},
-  {question: "Which country is famous for the Great Wall?", options: ["China","Japan","India","Thailand"], answer: 0},
+  {question: "Which country has the Great Wall?", options: ["China","Japan","Thailand","South Korea"], answer: 0},
   {question: "Which spice is essential in curry dishes worldwide?", options: ["Cumin","Basil","Oregano","Thyme"], answer: 0},
   {question: "The Colosseum is located in which city?", options: ["Athens","Rome","Venice","Paris"], answer: 1},
-  {question: "Which country is famous for chocolate?", options: ["Belgium","USA","India","Brazil"], answer: 0},
+  {question: "Which country is famous for chocolate?", options: ["Belgium","USA","Switzerland","Brazil"], answer: 2},
   {question: "Which company developed Android?", options: ["Apple","Google","Microsoft","Samsung"], answer: 1},
   {question: "Which fruit is used in guacamole?", options: ["Avocado","Tomato","Potato","Corn"], answer: 0},
-  {question: "Which city is famous for the Taj Mahal?", options: ["Agra","Delhi","Jaipur","Mumbai"], answer: 0},
-  {question: "Which software is used for video conferencing globally?", options: ["Zoom","Slack","Spotify","Drive"], answer: 0},
   {question: "Which city is known as the Big Apple?", options: ["New York","Los Angeles","Chicago","Miami"], answer: 0},
   {question: "Which country is famous for pizza?", options: ["Italy","France","Spain","USA"], answer: 0},
   {question: "Which desert is the largest in the world?", options: ["Sahara","Gobi","Kalahari","Arabian"], answer: 0},
@@ -117,15 +114,12 @@ let allQuestions = [
   {question: "Which European city is known for canals?", options: ["Venice","Paris","London","Amsterdam"], answer: 0},
   {question: "Which sea is between Africa and Europe?", options: ["Red Sea","Mediterranean Sea","Baltic Sea","Black Sea"], answer: 1},
   {question: "Which country is famous for maple syrup?", options: ["Canada","USA","Sweden","Norway"], answer: 0},
-  {question: "Which programming language is known for web development?", options: ["Python","HTML","C++","Java"], answer: 1},
+  {question: "Which programming language is widely used for web development?", options: ["Python","HTML","C++","Java"], answer: 1},
   {question: "Which country is home to the Amazon Rainforest?", options: ["Brazil","Peru","Colombia","Venezuela"], answer: 0},
   {question: "Which chocolate brand is from Switzerland?", options: ["Lindt","Hershey","Nestle","Cadbury"], answer: 0},
   {question: "Which city hosts Oktoberfest?", options: ["Berlin","Munich","Frankfurt","Hamburg"], answer: 1},
   {question: "Which country is known for flamenco dance?", options: ["Spain","Portugal","Italy","Mexico"], answer: 0},
   {question: "Which company created Windows?", options: ["Microsoft","Apple","Google","IBM"], answer: 0},
-  {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
-  {question: "Which landmark is in India?", options: ["Christ the Redeemer","Taj Mahal","Eiffel Tower","Big Ben"], answer: 1},
-  {question: "Which country is known for tulips?", options: ["Netherlands","Belgium","Germany","France"], answer: 0},
   {question: "Which country is famous for Kimchi?", options: ["China","Japan","South Korea","Thailand"], answer: 2},
   {question: "Which city is called the City of Light?", options: ["London","Paris","Rome","New York"], answer: 1},
   {question: "Which beverage originated in Turkey?", options: ["Coffee","Tea","Wine","Beer"], answer: 0},
@@ -134,58 +128,52 @@ let allQuestions = [
   {question: "Which tech company made the first computer mouse?", options: ["Apple","Xerox","Microsoft","IBM"], answer: 1},
   {question: "Which city has the Burj Khalifa?", options: ["Dubai","Doha","Abu Dhabi","Riyadh"], answer: 0},
   {question: "Which sea borders Italy?", options: ["Mediterranean","Red","Black","Baltic"], answer: 0},
-  {question: "Which country is famous for sushi?", options: ["China","Japan","Thailand","Korea"], answer: 1},
-  // Add more up to 100+ questions as needed
+  {question: "Which country is famous for tea?", options: ["India","China","Japan","Sri Lanka"], answer: 1},
+  {question: "Which city is famous for the Louvre Museum?", options: ["London","Paris","Rome","Madrid"], answer: 1},
+  {question: "Which country is known as the Land of the Rising Sun?", options: ["China","Japan","Thailand","Korea"], answer: 1},
 ];
 
-// Shuffle all questions and pick 10 per session
-let questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0,10);
+// Shuffle 10 questions per quiz
+let questions = allQuestions.sort(()=>0.5-Math.random()).slice(0,10);
 
-let current = 0;
-let score = 0;
-let timeLeft = 45;
-let timerInterval;
+let current=0, score=0, timeLeft=45, timerInterval;
 
 // ------------------- START QUIZ -------------------
-document.getElementById("start-btn").addEventListener("click", () => {
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("quiz-screen").style.display = "block";
+document.getElementById("start-btn").addEventListener("click", ()=>{
+  document.getElementById("start-screen").style.display="none";
+  document.getElementById("quiz-screen").style.display="block";
   loadQuestion();
 });
 
 // ------------------- LOAD QUESTION -------------------
-function loadQuestion() {
-  document.getElementById("result").innerText = "";
-  document.getElementById("question").innerText = questions[current].question;
-
-  let buttons = document.querySelectorAll(".option");
-  buttons.forEach((btn, i) => {
-    btn.innerText = questions[current].options[i];
-    btn.style.backgroundColor = "#ff9800";
+function loadQuestion(){
+  document.getElementById("result").innerText="";
+  document.getElementById("question").innerText=questions[current].question;
+  let buttons=document.querySelectorAll(".option");
+  buttons.forEach((btn,i)=>{
+    btn.innerText=questions[current].options[i];
+    btn.style.backgroundColor="#ff9800";
   });
-
   startTimer();
 }
 
 // ------------------- CHECK ANSWER -------------------
-function checkAnswer(i) {
+function checkAnswer(i){
   clearInterval(timerInterval);
-  let buttons = document.querySelectorAll(".option");
-
-  if(i === questions[current].answer){
-    document.getElementById("result").innerText = "✅ Correct!";
+  let buttons=document.querySelectorAll(".option");
+  if(i===questions[current].answer){
+    document.getElementById("result").innerText="✅ Correct!";
     score++;
     if(i>=0) buttons[i].style.backgroundColor="#4CAF50";
-  } else {
-    document.getElementById("result").innerText = "❌ Wrong!";
+  }else{
+    document.getElementById("result").innerText="❌ Wrong!";
     if(i>=0) buttons[i].style.backgroundColor="#f44336";
     buttons[questions[current].answer].style.backgroundColor="#4CAF50";
   }
-
   current++;
   if(current<questions.length){
     setTimeout(loadQuestion,1200);
-  } else {
+  }else{
     setTimeout(showFinalResult,1200);
   }
 }
@@ -195,7 +183,6 @@ function startTimer(){
   timeLeft=45;
   document.getElementById("timer").innerText="Time: "+timeLeft+"s";
   clearInterval(timerInterval);
-
   timerInterval=setInterval(()=>{
     timeLeft--;
     document.getElementById("timer").innerText="Time: "+timeLeft+"s";
